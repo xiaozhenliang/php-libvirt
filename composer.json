@@ -1,0 +1,17 @@
+{
+    "name": "lps/libvirt-php",
+    "type": "library",
+    "license": "gpl",
+    "authors": [
+        {
+            "name": "Pengfei-Gao",
+            "email": "net.aifei8@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Lps\\": "src/"
+        }
+    }
+}
