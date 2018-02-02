@@ -31,6 +31,7 @@ class Libvirt {
         return libvirt_connect_get_hostname($this->connection);
     }
 
+
     /**
      * Function is used to get the connection URI. This is useful to check the hypervisor type of host machine when using "null" uri to libvirt_connect().
      * @conn [resource]:	resource for connection
@@ -50,6 +51,7 @@ class Libvirt {
     public function createImage($name, $size = 500, $format='raw'){
         return libvirt_image_create($this->connection,$name, $size, $format);
     }
+
     /**
      * Function is used to create the image of desired name, size and format. The image will be created in the image path (libvirt.image_path INI variable). Works only on local systems!.
      * @image [string]:	name of the image file that should be deleted
@@ -66,6 +68,7 @@ class Libvirt {
     public function getHypervisor(){
         return libvirt_connect_get_hypervisor($this->connection);
     }
+
     /**
      * Function is used to get the information whether the connection is encrypted or not.
      * Returns:	: 1 if encrypted, 0 if not encrypted, -1 on error
@@ -73,6 +76,7 @@ class Libvirt {
     public function isEncrypted(){
         return libvirt_connect_is_encrypted($this->connection);
     }
+
     /**
      * Function is used to get maximum number of VCPUs per VM on the hypervisor connection.
      * Returns:	: number of VCPUs available per VM on the connection or FALSE for error
@@ -94,6 +98,22 @@ class Libvirt {
      */
     public function createStream(){
         return  libvirt_stream_create($this->connection);
+    }
+
+    /** Function is used to install a new virtual machine to the machine.
+     * @param $name [string] name of the new domain
+     * @param $arch [string] optional architecture string, can be NULL to get default (or false)
+     * @param $memMB [int] number of megabytes of RAM to be allocated for domain
+     * @param $maxmemMB [int] maximum number of megabytes of RAM to be allocated for domain
+     * @param $vcpus [int] number of VCPUs to be allocated to domain
+     * @param $iso_image [string] installation ISO image for domain
+     * @param $disks [array] array of disk devices for domain, consist of keys as 'path' (storage location), 'driver' (image type, e.g. 'raw' or 'qcow2'), 'bus' (e.g. 'ide', 'scsi'), 'dev' (device to be presented to the guest - e.g. 'hda'), 'size' (with 'M' or 'G' suffixes, like '10G' for 10 gigabytes image etc.) and 'flags' (VIR_DOMAIN_DISK_FILE or VIR_DOMAIN_DISK_BLOCK, optionally VIR_DOMAIN_DISK_ACCESS_ALL to allow access to the disk for all users on the host system)
+     * @param $networks [array] array of network devices for domain, consists of keys as 'mac' (for MAC address), 'network' (for network name) and optional 'model' for model of NIC device
+     * @param $flags bit array of flags
+     * @return mixed a new domain resource
+     */
+    public function createDomain( $name, $arch, $memMB, $maxmemMB, $vcpus, $iso_image, $disks, $networks, $flags = null){
+        return libvirt_domain_new($this->connection, $name, $arch, $memMB, $maxmemMB, $vcpus, $iso_image, $disks, $networks, $flags);
     }
 
 }
