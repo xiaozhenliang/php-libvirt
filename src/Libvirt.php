@@ -40,7 +40,6 @@ class Libvirt {
         return libvirt_connect_get_uri($this->connection);
     }
 
-
     /**
      * Function is used to create the image of desired name, size and format. The image will be created in the image path (libvirt.image_path INI variable). Works only o.
      * @name [string]:	name of the image file that will be created in the libvirt.image_path directory
@@ -74,7 +73,6 @@ class Libvirt {
     public function isEncrypted(){
         return libvirt_connect_is_encrypted($this->connection);
     }
-
     /**
      * Function is used to get maximum number of VCPUs per VM on the hypervisor connection.
      * Returns:	: number of VCPUs available per VM on the connection or FALSE for error
