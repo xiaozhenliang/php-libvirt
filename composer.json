@@ -1,5 +1,5 @@
 {
-    "name": "lps/libvirt-php",
+    "name": "lps/libvirt",
     "type": "library",
     "license": "gpl",
     "authors": [
