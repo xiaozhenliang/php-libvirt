@@ -8,7 +8,9 @@
             "email": "net.aifei8@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "jms/serializer"
+    },
     "autoload": {
         "psr-4": {
             "Lps\\": "src/"
