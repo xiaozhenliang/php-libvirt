@@ -1,5 +1,5 @@
 {
-    "name": "Lps/Libvirt",
+    "name": "lps/libvirt",
     "type": "library",
     "license": "gpl",
     "authors": [
