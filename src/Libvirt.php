@@ -116,4 +116,11 @@ class Libvirt {
         return libvirt_domain_new($this->connection, $name, $arch, $memMB, $maxmemMB, $vcpus, $iso_image, $disks, $networks, $flags);
     }
 
+    /** Function is used to get the VNC server location for the newly created domain (newly started installation).
+     * @return mixed  : a VNC server for a newly created domain resource (if any)
+     */
+    public function getNewDomainVnc(){
+        return libvirt_domain_new_get_vnc();
+    }
+
 }

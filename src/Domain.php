@@ -23,6 +23,8 @@ class Domain
     function __construct($resource){
         $this->resource = $resource;
     }
+
+
     /**
      * Function to get information whether domain is persistent or not.
      * @return mixed : TRUE for persistent, FALSE for not persistent, -1 on error
