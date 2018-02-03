@@ -123,4 +123,20 @@ class Libvirt {
         return libvirt_domain_new_get_vnc();
     }
 
+    /** Function is used to define the domain from XML string.
+     * @param $xml XML string to define guest from
+     * @return mixed : newly defined domain resource
+     */
+    public function defineDomainByXml($xml){
+        return libvirt_domain_define_xml($this->connection, $xml);
+    }
+
+    /** Function is used to create the domain identified by it's resource.
+     * @param $xml XML string to create guest from
+     * @return mixed : newly started/created domain resource
+     */
+    public function createDomainByXml($xml){
+        return libvirt_domain_create_xml($this->connection, $xml);
+    }
+
 }
