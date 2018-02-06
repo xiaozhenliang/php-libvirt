@@ -184,4 +184,12 @@ class Libvirt {
     public function listNodeDevs($cap){
         return libvirt_list_nodedevs($this->connection, $cap);
     }
+
+    /** Function is used to lookup for storage pool by it's name.
+     * @param $name [string]:	storage pool name
+     * @return mixed : libvirt storagepool resource
+     */
+    public function lookupStoragePoolByName($name){
+        return libvirt_storagepool_lookup_by_name($this->connection, $name);
+    }
 }
