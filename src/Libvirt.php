@@ -1,5 +1,7 @@
 <?php
+
 namespace Lps;
+
 class Libvirt {
     
     private $connection;
@@ -139,4 +141,47 @@ class Libvirt {
         return libvirt_domain_create_xml($this->connection, $xml);
     }
 
+    /** Function is used to list domains on the connection.
+     * @return mixed : libvirt domain names array for the connection
+     */
+    public function listDomains(){
+        return libvirt_list_domains($this->connection);
+    }
+
+    /** Function is used to list domain resources on the connection.
+     * @return mixed : libvirt domain resources array for the connection
+     */
+    public function listDomainResources(){
+        return libvirt_list_domain_resources($this->connection);
+    }
+
+    /** Function is used to list active domain names on the connection.
+     * @return mixed : libvirt active domain names array for the connection
+     */
+    public function listActiveDomains(){
+        return libvirt_list_active_domains($this->connection);
+    }
+
+    /** Function is used to list inactive domain names on the connection.
+     * @return mixed : libvirt inactive domain names array for the connection
+     */
+    public function listInactiveDomains(){
+        return libvirt_list_inactive_domains($this->connection);
+    }
+
+    /** flags whether to list active, inactive or all networks (VIR_NETWORKS_{ACTIVE|INACTIVE|ALL} constants)
+     * @param $flags flags whether to list active, inactive or all networks (VIR_NETWORKS_{ACTIVE|INACTIVE|ALL} constants)
+     * @return mixed : libvirt network names array for the connection
+     */
+    public function listNetworks($flags){
+        return libvirt_list_networks($this->connection, $flags);
+    }
+
+    /** Function is used to list node devices on the connection.
+     * @param $cap [string]:	optional capability string
+     * @return mixed : libvirt nodedev names array for the connection
+     */
+    public function listNodeDevs($cap){
+        return libvirt_list_nodedevs($this->connection, $cap);
+    }
 }

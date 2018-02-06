@@ -1,7 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gaopengfei04
+ * User: Pengfei-Gao
  * Date: 2018/2/2
  * Time: 上午12:53
  */
@@ -401,5 +400,96 @@ class Domain
      */
     public function getBlockInfo($dev){
         return libvirt_domain_get_block_info($this->resource, $dev);
+    }
+
+    /** Function is used to get the domain's interface stats.
+     * @param $path path to interface device
+     * @return mixed : interface stats array of {tx|rx}_{bytes|packets|errs|drop} fields
+     */
+    public function getInterfaceStats($path){
+        return libvirt_domain_interface_stats($this->resource, $path);
+    }
+
+    /** Function is used to get the domain's connection resource. This function should *not* be used!.
+     * @return mixed : libvirt connection resource
+     */
+    public function getConnectResource(){
+        return libvirt_domain_get_connect($this->resource);
+    }
+
+    /** Function is used migrate domain to another libvirt daemon specified by it's URI.
+     * @param $dest_uri [string]:	destination URI to migrate to
+     * @param $flags [int]:	migration flags
+     * @param $dname [string]:	domain name to rename domain to on destination side
+     * @param $bandwidth [int]:	migration bandwidth in Mbps
+     * @return mixed 	: TRUE for success, FALSE on error
+     */
+    public function migrateToUri($dest_uri, $flags, $dname, $bandwidth){
+        return libvirt_domain_migrate_to_uri($this->resource, $dest_uri, $flags, $dname, $bandwidth);
+    }
+
+    /** Function is used migrate domain to another libvirt daemon specified by it's URI.
+     * @param $dconnuri [string]:	URI for target libvirtd
+     * @param $miguri [string]:	URI for invoking the migration
+     * @param $dxml [string]:	XML config for launching guest on target
+     * @param $flags [int]:	migration flags
+     * @param $dname [string]:	domain name to rename domain to on destination side
+     * @param $bandwidth [int]:	migration bandwidth in Mbps
+     * @return mixed : TRUE for success, FALSE on error
+     */
+    public function migrateToUri2($dconnuri, $miguri, $dxml, $flags, $dname, $bandwidth){
+        return libvirt_domain_migrate_to_uri2($this->resource, $dconnuri, $miguri, $dxml, $flags, $dname, $bandwidth);
+    }
+
+
+    /** Function is used migrate domain to another domain.
+     * @param $dest_conn [string]:	destination host connection object
+     * @param $flags [int]:	migration flags
+     * @param $dname [string]:	domain name to rename domain to on destination side
+     * @param $bandwidth [int]:	migration bandwidth in Mbps
+     * @return mixed : libvirt domain resource for migrated domain
+     */
+    public function migrate($dest_conn, $flags, $dname, $bandwidth){
+        return libvirt_domain_migrate($this->resource, $dest_conn, $flags, $dname, $bandwidth);
+    }
+
+    /** Function is used get job information for the domain.
+     * @return mixed : job information array of type, time, data, mem and file fields
+     */
+    public function getJobInfo(){
+        return libvirt_domain_get_job_info($this->resource);
+    }
+
+    /** Function is used to get the information whether domain has the current snapshot.
+     * @param $flags [int]:	libvirt snapshot flags
+     * @return mixed : TRUE is domain has the current snapshot, otherwise FALSE (you may need to check for error using libvirt_get_last_error())
+     */
+    public function hasCurrentSnapshot($flags){
+        return libvirt_domain_has_current_snapshot($this->resource, $flags);
+    }
+
+    /** This functions is used to lookup for the snapshot by it's name.
+     * @param $name [string]:	name of the snapshot to get the resource
+     * @param $flags [int]:	libvirt snapshot flags
+     * @return mixed : domain snapshot resource
+     */
+    public function loookupSnapshotByName($name, $flags){
+        return libvirt_domain_snapshot_lookup_by_name($this->resource, $name, $flags);
+    }
+
+    /** This function creates the domain snapshot for the domain identified by it's resource.
+     * @param $flags [int]:	libvirt snapshot flags
+     * @return mixed 	: domain snapshot resource
+     */
+    public function createSnapshot($flags){
+        return libvirt_domain_snapshot_create($this->resource, $flags);
+    }
+
+    /** Function is used to list domain snapshots for the domain specified by it's resource.
+     * @param $flags [int]:	libvirt snapshot flags
+     * @return mixed : libvirt domain snapshot names array
+     */
+    public function getSnapshotList($flags){
+        return libvirt_list_domain_snapshots($this->resource, $flags);
     }
 }

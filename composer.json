@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "antimattr/xml" : ">=1.0.0"
+        "soapbox/laravel-formatter" : ">=2.0"
     },
     "autoload": {
         "psr-4": {
