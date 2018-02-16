@@ -192,4 +192,27 @@ class Libvirt {
     public function lookupStoragePoolByName($name){
         return libvirt_storagepool_lookup_by_name($this->connection, $name);
     }
+
+    /** Function is used to list storage pools on the connection.
+     *  @Return :	: libvirt storagepool names array for the connection
+     */
+    public function listStoragePool(){
+        return libvirt_list_storagepools($this->connection);
+    }
+
+
+    /** Function is used to list storage pools on the connection.
+     *  @Return :	: libvirt storagepool names array for the connection
+     */
+    public function listActiveStoragePool(){
+        return libvirt_list_active_storagepools($this->connection);
+    }
+
+
+    /** Function is used to list storage pools on the connection.
+     *  @Return :	: libvirt storagepool names array for the connection
+     */
+    public function listInActiveStoragePool(){
+        return libvirt_list_inactive_storagepools($this->connection);
+    }
 }
