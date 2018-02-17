@@ -2,6 +2,8 @@
 
 namespace Lps;
 
+use Lps\Domain; 
+
 class Libvirt {
     
     private $connection;
@@ -214,5 +216,15 @@ class Libvirt {
      */
     public function listInActiveStoragePool(){
         return libvirt_list_inactive_storagepools($this->connection);
+    }
+
+
+    /** Function is used to lookup for domain by it's name.
+     * @name [string]:	domain name to look for
+     * @Returns: libvirt domain resource
+     */
+    public function lookupDomainByName($name){
+        $res = libvirt_domain_lookup_by_name($this->connection,$name);
+        return new Domain($res);
     }
 }
