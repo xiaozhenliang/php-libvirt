@@ -8,12 +8,13 @@ class Libvirt {
     
     private $connection;
     
+    const DEFAULT_URI = "qemu:///system";
     /**
      * @url [string]:	URI for connection
      * @readonly [bool]:	flag whether to use read-only connection or not
      * @credentials [array]:	array of connection credentials
      */
-    function __construct($uri = "qemu:///system", $readonly = true, $credentials = false){
+    function __construct($uri = self::DEFAULT_URI, $readonly = true, $credentials = false){
        $this->connection = $credentials ? libvirt_connect($uri, $readonly,$credentials) : libvirt_connect($uri, $readonly) ;
     }
 
