@@ -228,4 +228,29 @@ class Libvirt {
         $res = libvirt_domain_lookup_by_name($this->connection,$name);
         return new Domain($res);
     }
+
+     /** Function is used to get Libvirt instance by laravel request 
+     * @return Libvirt
+     */
+    static function getLibvirtInstance(){
+        try{
+            if(Input::isMethod('get') && $domain_uri = Input::has('domain_uri')){
+                return new Libvirt( Input::get('domain_uri') );
+            }else if(Input::isJson()){
+                $json_params = json_decode(Input::getContent());
+                if(isset($json_params->domain_uri) && isset($json_params->write) && is_bool($json_params->write) ) {
+                    return new Libvirt($json_params->domain_uri,$json_params->write);
+                }
+                if(isset($json_params->write) && is_bool($json_params->write) ) {
+                    return new Libvirt(Libvirt::DEFAULT_URI,$json_params->write);
+                }
+                if(isset($json_params->domain_uri) ) {
+                    return new Libvirt($json_params->domain_uri);
+                }
+            }
+            return new Libvirt();
+        }catch(\Exception $exception) {
+            throw new LibvirtInitFailException(__("Libvirt initialization failed。 ") );
+        }
+    }
 }
