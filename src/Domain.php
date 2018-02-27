@@ -298,8 +298,15 @@ class Domain
      * @param $flags optional flags
      * @return mixed : TRUE for success, FALSE on error
      */
-    public function reboot($flags){
+    public function reboot($flags = 1){
         return libvirt_domain_reboot($this->resource, $flags);
+    }
+
+    /** Function is used to create the domain identified by it's resource.
+     * @return mixed : newly started/created domain resource
+     */
+    public function start(){
+        return libvirt_domain_create_xml( $this->getConnectResource(),$this->getXmlDesc());
     }
 
     /** Function is used to managed save the domain (domain was unloaded from memory and it state saved to disk) identified by it's resource.
